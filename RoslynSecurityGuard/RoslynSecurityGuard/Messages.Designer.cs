@@ -188,7 +188,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is not considered a strong cipher for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of DES..
+        ///   Looks up a localized string similar to {0} is not considered a strong cipher for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of {0}..
         /// </summary>
         internal static string WeakCipherAnalyzer_Message {
             get {
@@ -260,7 +260,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is no longer considered as strong hashing algorithim for password storage and signature generation..
+        ///   Looks up a localized string similar to {0} is no longer considered a strong hashing algorithim for password storage and signature generation..
         /// </summary>
         internal static string WeakHashingAnalyzer_Message {
             get {
