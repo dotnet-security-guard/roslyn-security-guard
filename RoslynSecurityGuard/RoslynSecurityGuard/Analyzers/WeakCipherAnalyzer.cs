@@ -14,38 +14,46 @@ namespace RoslynSecurityGuard.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WeakCipherAnalyzer : DiagnosticAnalyzer
     {
-                private static DiagnosticDescriptor Rule = AnalyzerUtil.GetDescriptorFromResource("SG0010", typeof(WeakCipherAnalyzer).Name, DiagnosticSeverity.Warning);
+        private static ImmutableDictionary<string, DiagnosticDescriptor> Rules =
+            new Dictionary<string, DiagnosticDescriptor>
+            {
+                { "DES", AnalyzerUtil.GetDescriptorFromResource("SG0010", typeof(WeakCipherAnalyzer).Name, DiagnosticSeverity.Warning, "DES") },
+                { "RC2", AnalyzerUtil.GetDescriptorFromResource("SG0010", typeof(WeakCipherAnalyzer).Name, DiagnosticSeverity.Warning, "RC2") }
+            }.ToImmutableDictionary();
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => Rules.Values.ToImmutableArray<DiagnosticDescriptor>();
 
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterSyntaxNodeAction(VisitSyntaxNode, SyntaxKind.InvocationExpression, SyntaxKind.ObjectCreationExpression);
-        }
+        public override void Initialize(AnalysisContext context) => context.RegisterSyntaxNodeAction(VisitSyntaxNode, SyntaxKind.InvocationExpression, SyntaxKind.ObjectCreationExpression);
 
         private static void VisitSyntaxNode(SyntaxNodeAnalysisContext ctx)
         {
-
             InvocationExpressionSyntax node = ctx.Node as InvocationExpressionSyntax;
             ObjectCreationExpressionSyntax node2 = ctx.Node as ObjectCreationExpressionSyntax;
+
             if (node != null)
             {
                 var symbol = ctx.SemanticModel.GetSymbolInfo(node).Symbol;
-                //DES.Create()
-                if (AnalyzerUtil.SymbolMatch(symbol, type: "DES", name: "Create"))
+
+                foreach (var cipher in Rules)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, node.Expression.GetLocation(), "DES");
-                    ctx.ReportDiagnostic(diagnostic);
+                    if (AnalyzerUtil.SymbolMatch(symbol, type: cipher.Key, name: "Create"))
+                    {
+                        var diagnostic = Diagnostic.Create(cipher.Value, node.Expression.GetLocation(), cipher);
+                        ctx.ReportDiagnostic(diagnostic);
+                    }
                 }
             }
             if (node2 != null)
             {
                 var symbol = ctx.SemanticModel.GetSymbolInfo(node2).Symbol;
-                //DES.Create()
-                if (AnalyzerUtil.SymbolMatch(symbol, type: "DESCryptoServiceProvider"))
+
+                foreach (var cipher in Rules)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, node2.GetLocation(), "DES");
-                    ctx.ReportDiagnostic(diagnostic);
+                    if (AnalyzerUtil.SymbolMatch(symbol, type: cipher.Key+"CryptoServiceProvider"))
+                    {
+                        var diagnostic = Diagnostic.Create(cipher.Value, node2.GetLocation(), cipher);
+                        ctx.ReportDiagnostic(diagnostic);
+                    }
                 }
             }
         }

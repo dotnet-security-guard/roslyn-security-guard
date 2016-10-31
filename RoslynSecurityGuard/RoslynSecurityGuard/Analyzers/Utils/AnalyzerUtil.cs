@@ -21,6 +21,18 @@ namespace RoslynSecurityGuard.Analyzers
                 description : GetLocalString(localeId + "_Message"));
         }
 
+        public static DiagnosticDescriptor GetDescriptorFromResource(string id, string localeId, DiagnosticSeverity severity, params object[] args)
+        {
+            return new DiagnosticDescriptor(id,
+                GetLocalString(localeId + "_Title"),
+                GetLocalString(localeId + "_Title"),
+                "Security",
+                severity,
+                isEnabledByDefault: true,
+                helpLinkUri: "https://dotnet-security-guard.github.io/rules.htm#" + localeId,
+                description: string.Format(GetLocalString(localeId + "_Message").ToString(),args));
+        }
+
         private static LocalizableString GetLocalString(string id) {
             return new LocalizableResourceString(id, Messages.ResourceManager, typeof(Messages));
         }

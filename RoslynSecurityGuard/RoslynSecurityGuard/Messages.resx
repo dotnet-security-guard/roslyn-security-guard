@@ -160,7 +160,7 @@
     <value>Certificate Validation has been disabled</value>
   </data>
   <data name="WeakCipherAnalyzer_Message" xml:space="preserve">
-    <value>DES is not considered a strong cipher for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of DES.</value>
+    <value>{0} is not considered a strong cipher for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of {0}.</value>
   </data>
   <data name="WeakCipherAnalyzer_Title" xml:space="preserve">
     <value>Weak cipher algorithm</value>
@@ -184,7 +184,7 @@
     <value>Weak cipher mode</value>
   </data>
   <data name="WeakHashingAnalyzer_Message" xml:space="preserve">
-    <value>The hashing function "{0}" is no longer recommended for password storage and signature generation.</value>
+    <value>{0} is no longer considered a strong hashing algorithim for password storage and signature generation.</value>
   </data>
   <data name="WeakHashingAnalyzer_Title" xml:space="preserve">
     <value>Weak hashing function</value>
