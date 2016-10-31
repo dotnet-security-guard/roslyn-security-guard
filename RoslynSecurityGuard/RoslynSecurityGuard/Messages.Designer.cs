@@ -62,7 +62,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The dynamic value passed to the command execution should be validate..
+        ///   Looks up a localized string similar to The dynamic value passed to the command execution should be validated..
         /// </summary>
         internal static string CommandInjectionAnalyzer_Message {
             get {
@@ -80,7 +80,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Event validation is disabled. The integrity of client-side control will not be validate on postback..
+        ///   Looks up a localized string similar to Event validation is disabled. The integrity of client-side control will not be validated on postback..
         /// </summary>
         internal static string EnableEventValidationFalse_Message {
             get {
@@ -98,7 +98,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View state mac is disable. The view state could be altered by an attacker. (This feature cannot be disabled in the recent version of ASP.net).
+        ///   Looks up a localized string similar to View state mac is disabled. The view state could be altered by an attacker. (This feature cannot be disabled in the recent version of ASP.net).
         /// </summary>
         internal static string EnableViewStateMac_Message {
             get {
@@ -116,7 +116,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The dynamic value passed in the SQL query should be validate..
+        ///   Looks up a localized string similar to The dynamic value passed in the SQL query should be validated..
         /// </summary>
         internal static string LinqSqlInjectionAnalyzer_Message {
             get {
@@ -170,7 +170,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate Validation has been disable. The communication could be intercepted..
+        ///   Looks up a localized string similar to Certificate Validation has been disabled. The communication could be intercepted..
         /// </summary>
         internal static string WeakCertificateValidationAnalyzer_Message {
             get {
@@ -179,7 +179,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate Validation has been disable.
+        ///   Looks up a localized string similar to Certificate Validation has been disabled.
         /// </summary>
         internal static string WeakCertificateValidationAnalyzer_Title {
             get {
@@ -188,7 +188,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DES is not considered strong ciphers for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of DES..
+        ///   Looks up a localized string similar to {0} is not considered a strong cipher for modern applications. Currently, NIST recommends the usage of AES block ciphers instead of DES..
         /// </summary>
         internal static string WeakCipherAnalyzer_Message {
             get {
@@ -224,7 +224,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The ECB mode produce the same result for identical blocks (ie: 16 bytes for AES). An attacker could be able to guess the encrypted message. The use of AES in CBC mode with a HMAC is recommended guaranteeing integrity and confidentiality..
+        ///   Looks up a localized string similar to ECB mode will produce the same result for identical blocks (ie: 16 bytes for AES). An attacker could be able to guess the encrypted message. The use of AES in CBC mode with a HMAC is recommended guaranteeing integrity and confidentiality..
         /// </summary>
         internal static string WeakCipherModeAnalyzerEcb_Message {
             get {
@@ -260,7 +260,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The hashing function &quot;{0}&quot; is no longer recommended for password storage and signature generation..
+        ///   Looks up a localized string similar to {0} is no longer considered as strong hashing algorithim for password storage and signature generation..
         /// </summary>
         internal static string WeakHashingAnalyzer_Message {
             get {
@@ -296,7 +296,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The dynamic value passed to the XPath query should be validate.
+        ///   Looks up a localized string similar to The dynamic value passed to the XPath query should be validated.
         /// </summary>
         internal static string XPathInjectionAnalyzer_Message {
             get {
@@ -314,7 +314,7 @@ namespace RoslynSecurityGuard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The XML parser is configured incorrectly. The operation could be vulnerable to XXE..
+        ///   Looks up a localized string similar to The XML parser is configured incorrectly. The operation could be vulnerable to XML eXternal Entity (XXE) processing..
         /// </summary>
         internal static string XxeAnalyzer_Message {
             get {
