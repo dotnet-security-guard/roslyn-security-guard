@@ -14,7 +14,9 @@ namespace RoslynSecurityGuard.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WeakCipherAnalyzer : DiagnosticAnalyzer
     {
-                private static DiagnosticDescriptor Rule = AnalyzerUtil.GetDescriptorFromResource("SG0010", typeof(WeakCipherAnalyzer).Name, DiagnosticSeverity.Warning);
+        private static DiagnosticDescriptor Rule = AnalyzerUtil.GetDescriptorFromResource("SG0010", typeof(WeakCipherAnalyzer).Name, DiagnosticSeverity.Warning);
+
+        private static ImmutableArray<string> BadCiphers = ImmutableArray.Create("DES", "RC2");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
 
@@ -31,21 +33,27 @@ namespace RoslynSecurityGuard.Analyzers
             if (node != null)
             {
                 var symbol = ctx.SemanticModel.GetSymbolInfo(node).Symbol;
-                //DES.Create()
-                if (AnalyzerUtil.SymbolMatch(symbol, type: "DES", name: "Create"))
+
+                foreach (string cipher in BadCiphers)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, node.Expression.GetLocation(), "DES");
-                    ctx.ReportDiagnostic(diagnostic);
+                    if (AnalyzerUtil.SymbolMatch(symbol, type: cipher, name: "Create"))
+                    {
+                        var diagnostic = Diagnostic.Create(Rule, node.Expression.GetLocation(), cipher);
+                        ctx.ReportDiagnostic(diagnostic);
+                    }
                 }
             }
             if (node2 != null)
             {
                 var symbol = ctx.SemanticModel.GetSymbolInfo(node2).Symbol;
-                //DES.Create()
-                if (AnalyzerUtil.SymbolMatch(symbol, type: "DESCryptoServiceProvider"))
+
+                foreach (string cipher in BadCiphers)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, node2.GetLocation(), "DES");
-                    ctx.ReportDiagnostic(diagnostic);
+                    if (AnalyzerUtil.SymbolMatch(symbol, type: cipher+"CryptoServiceProvider"))
+                    {
+                        var diagnostic = Diagnostic.Create(Rule, node2.GetLocation(), cipher);
+                        ctx.ReportDiagnostic(diagnostic);
+                    }
                 }
             }
         }
