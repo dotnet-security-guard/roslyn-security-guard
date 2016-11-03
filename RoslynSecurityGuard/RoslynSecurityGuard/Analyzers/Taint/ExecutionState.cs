@@ -22,7 +22,7 @@ namespace RoslynSecurityGuard.Analyzers.Taint
         }
 
         public void AddNewValue(string identifier, VariableState value) {
-            Variables.Add(identifier, value);
+            if (!Variables.ContainsKey(identifier)) Variables.Add(identifier, value);
         }
 
         public VariableState GetValueByIdentifier(string identifier) {
