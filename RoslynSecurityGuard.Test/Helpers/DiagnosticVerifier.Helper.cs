@@ -2,10 +2,10 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Data.Linq;
 using System.Diagnostics;
 using System.Linq;
 
@@ -22,6 +22,9 @@ namespace TestHelper
         private static readonly MetadataReference CSharpSymbolsReference = MetadataReference.CreateFromFile(typeof(CSharpCompilation).Assembly.Location);
         private static readonly MetadataReference CodeAnalysisReference = MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location);
         private static readonly MetadataReference SystemDiagReference = MetadataReference.CreateFromFile(typeof(Process).Assembly.Location);
+
+        private static readonly CompilationOptions CSharpDefaultOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+        private static readonly CompilationOptions VisualBasicDefaultOptions = new VisualBasicCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
         internal static string DefaultFilePathPrefix = "Test";
         internal static string CSharpDefaultFileExt = "cs";
@@ -150,6 +153,8 @@ namespace TestHelper
             string fileNamePrefix = DefaultFilePathPrefix;
             string fileExt = language == LanguageNames.CSharp ? CSharpDefaultFileExt : VisualBasicDefaultExt;
 
+            CompilationOptions options = language == LanguageNames.CSharp ? CSharpDefaultOptions : VisualBasicDefaultOptions;
+
             var projectId = ProjectId.CreateNewId(debugName: TestProjectName);
 
             var solution = new AdhocWorkspace()
@@ -159,7 +164,8 @@ namespace TestHelper
                 .AddMetadataReference(projectId, SystemCoreReference)
                 .AddMetadataReference(projectId, CSharpSymbolsReference)
                 .AddMetadataReference(projectId, CodeAnalysisReference)
-                .AddMetadataReference(projectId, SystemDiagReference);
+                .AddMetadataReference(projectId, SystemDiagReference)
+                .WithProjectCompilationOptions(projectId, options);
 
             if (references != null) {
                 solution = solution.AddMetadataReferences(projectId, references);

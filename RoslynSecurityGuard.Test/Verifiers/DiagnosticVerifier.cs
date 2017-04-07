@@ -74,7 +74,7 @@ namespace TestHelper
         private void VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, DiagnosticResult[] expected, bool includeCompilerDiagnostics = true)
         {
             var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), includeCompilerDiagnostics);
-            VerifyDiagnosticResults(diagnostics.Where(x => x.Id != "CS5001" /* : Program does not contain a static 'Main' method suitable for an entry point */), analyzers, expected);
+            VerifyDiagnosticResults(diagnostics, analyzers, expected);
         }
 
         #endregion
