@@ -30,7 +30,6 @@ namespace RoslynSecurityGuard.Test.Tests
         {
 
             var test = @"
-using System;
 using System.Web;
 
 namespace VulnerableApp
@@ -62,7 +61,6 @@ namespace VulnerableApp
         public void CookieWithFlags()
         {
             var test = @"
-using System;
 using System.Web;
 
 namespace VulnerableApp

@@ -25,7 +25,6 @@ namespace RoslynSecurityGuard.Test.Tests
         public void DetectAnnotation1()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [Authorize]
@@ -51,7 +50,6 @@ public class HomeController : Controller
         public void DetectAnnotation2()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 public class HomeController : Controller
@@ -77,7 +75,6 @@ public class HomeController : Controller
         public void DetectAnnotation3()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [Authorize]

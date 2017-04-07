@@ -43,11 +43,10 @@ class WeakRandom
         {
             var code = @"
 using System;
-using System.Security.Cryptography;
 
 class WeakRandom
 {
-    static String generateWeakToken()
+    static string generateWeakToken()
     {
         Random rnd = new Random();
         return rnd.Next().ToString(); //Vulnerable
@@ -59,7 +58,7 @@ class WeakRandom
             {
                 Id = "SG0005",
                 Severity = DiagnosticSeverity.Warning,
-            }.WithLocation(10, -1);
+            }.WithLocation(9, -1);
 
             VerifyCSharpDiagnostic(code, expected);
         }

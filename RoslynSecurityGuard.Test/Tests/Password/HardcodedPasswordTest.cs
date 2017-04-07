@@ -29,7 +29,6 @@ namespace RoslynSecurityGuard.Tests
         {
 
             var test = @"
-using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace VulnerableApp
@@ -58,7 +57,6 @@ namespace VulnerableApp
         {
 
             var test = @"
-using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace VulnerableApp

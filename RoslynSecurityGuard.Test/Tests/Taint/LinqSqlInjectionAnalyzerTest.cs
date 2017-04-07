@@ -35,7 +35,7 @@ namespace VulnerableApp
 
     public class LyncInjectionFP
     {
-        public static int Main(DataContext ctx,string city) {
+        public static int Run(DataContext ctx,string city) {
             var users = ctx.ExecuteQuery<UserEntity>(@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
                 Address, City, Region, PostalCode, Country, Phone, Fax
                 FROM dbo.Users"");
@@ -63,7 +63,7 @@ namespace VulnerableApp
 
     public class LyncInjectionTP
     {
-        public static int Main(DataContext ctx,string city) {
+        public static int Run(DataContext ctx,string city) {
             var users = ctx.ExecuteQuery<UserEntity>(@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
                 Address, City, Region, PostalCode, Country, Phone, Fax
                 FROM dbo.Users
@@ -92,6 +92,7 @@ namespace VulnerableApp
         public void LinqInjectionFalsePositiveWithoutGeneric()
         {
             var test = @"
+using System;
 using System.Data.Linq;
 
 namespace VulnerableApp
@@ -99,8 +100,8 @@ namespace VulnerableApp
 
     public class LyncInjectionTP
     {
-        public static int Main(DataContext ctx,string city) {
-            var users = ctx.ExecuteQuery(typeof(UserEntity),@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
+        public static int Run(DataContext ctx,string city) {
+            var users = ctx.ExecuteQuery(typeof(String),@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
                 Address, City, Region, PostalCode, Country, Phone, Fax
                 FROM dbo.Users
                 WHERE  City = 'Montreal'"");
@@ -125,15 +126,15 @@ namespace VulnerableApp
         public void LinqInjectionVulnerableWithoutGeneric()
         {
             var test = @"
+using System;
 using System.Data.Linq;
 
 namespace VulnerableApp
 {
-
     public class LyncInjectionTP
     {
-        public static int Main(DataContext ctx,string city) {
-            var users = ctx.ExecuteQuery(typeof(UserEntity),@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
+        public static int Run(DataContext ctx,string city) {
+            var users = ctx.ExecuteQuery(typeof(String),@""SELECT CustomerID, CompanyName, ContactName, ContactTitle,
                 Address, City, Region, PostalCode, Country, Phone, Fax
                 FROM dbo.Users
                 WHERE  City = '"" + city+ ""'"");

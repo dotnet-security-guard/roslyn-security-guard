@@ -26,7 +26,6 @@ namespace RoslynSecurityGuard.Tests
         public void XxeFalsePositive1()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe
@@ -46,7 +45,6 @@ class Xxe
         public void XxeFalsePositive2()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe
@@ -54,7 +52,9 @@ class Xxe
     public static void parseUpload(string inputXml)
     {
         XmlReaderSettings settings = new XmlReaderSettings();
+#pragma warning disable 618
         settings.ProhibitDtd = true;
+#pragma warning restore 618
         XmlReader reader = XmlReader.Create(inputXml, settings);
 
     }
@@ -68,7 +68,6 @@ class Xxe
         public void XxeFalsePositive3()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe
@@ -89,7 +88,6 @@ class Xxe
         public void XxeFalsePositive4()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe
@@ -110,7 +108,6 @@ class Xxe
         public void XxeVulnerable1()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe
@@ -118,7 +115,9 @@ class Xxe
     public static void parseUpload(string inputXml)
     {
         XmlReaderSettings settings = new XmlReaderSettings();
+#pragma warning disable 618
         settings.ProhibitDtd = false;
+#pragma warning restore 618
         XmlReader reader = XmlReader.Create(inputXml, settings);
 
     }
@@ -134,7 +133,6 @@ class Xxe
         public void XxeVulnerable2()
         {
             var code = @"
-using System;
 using System.Xml;
 
 class Xxe

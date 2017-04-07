@@ -104,7 +104,6 @@ class SqlTransferTesting
         public void TransferStringInterpolatedSafe()
         {
             var test = @"
-using System;
 using System.Data.SqlClient;
 
 class SqlTransferTesting
@@ -127,7 +126,6 @@ class SqlTransferTesting
         public void TransferStringInterpolatedUnSafe()
         {
             var test = @"
-using System;
 using System.Data.SqlClient;
 
 class SqlTransferTesting

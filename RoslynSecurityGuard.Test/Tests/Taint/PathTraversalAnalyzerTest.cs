@@ -34,7 +34,7 @@ class PathTraversal
 {
     public static void Run(string input)
     {
-        return File.ReadAllText(input);
+        File.ReadAllText(input);
     }
 }
 ";
@@ -56,7 +56,7 @@ class PathTraversal
 {
     public static void Run(string input)
     {
-        return File.OpenRead(input);
+        File.OpenRead(input);
     }
 }
 ";
@@ -79,7 +79,7 @@ class PathTraversal
 {
     public static void Run(string input)
     {
-        return File.WriteAllText(input,""ouput.."");
+        File.WriteAllText(input,""ouput.."");
     }
 }
 ";
@@ -168,7 +168,7 @@ class PathTraversal
 {
     public static void Run(string input)
     {
-        return File.OpenRead(""C:/static/fsociety.dat"");
+        File.OpenRead(""C:/static/fsociety.dat"");
     }
 }
 ";

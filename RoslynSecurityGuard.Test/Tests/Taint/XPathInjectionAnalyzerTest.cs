@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
 using System.Collections.Generic;
 using System.Xml;
-using RoslynSecurityGuard.Analyzers;
 using RoslynSecurityGuard.Analyzers.Taint;
 
 namespace RoslynSecurityGuard.Tests
@@ -12,8 +11,6 @@ namespace RoslynSecurityGuard.Tests
     [TestClass]
     public class XPathInjectionAnalyzerTest : DiagnosticVerifier
     {
-
-        
         protected override IEnumerable<DiagnosticAnalyzer> GetCSharpDiagnosticAnalyzers()
         {
             return new[] { new TaintAnalyzer() };
@@ -84,8 +81,8 @@ class XPathInjectionTP
         XmlDocument doc = new XmlDocument();
         doc.Load(""/secret_config.xml"");
 
-        doc.SelectNodes(""/Config/Devices/Device[id='"" + input + ""']"").Count;
-        doc.SelectSingleNode(""/Config/Devices/Device[type='"" + input + ""']"").Value;
+        doc.SelectNodes(""/Config/Devices/Device[id='"" + input + ""']"");
+        doc.SelectSingleNode(""/Config/Devices/Device[type='"" + input + ""']"");
     }
 }";
             //Two occurrences

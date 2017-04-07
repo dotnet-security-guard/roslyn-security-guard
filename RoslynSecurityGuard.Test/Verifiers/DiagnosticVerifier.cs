@@ -56,12 +56,12 @@ namespace TestHelper
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
         /// <param name="language">The language of the classes represented by the source strings</param>
-        /// <param name="analyzer">The analyzer to be run on the source code</param>
+        /// <param name="analyzers">The analyzers to be run on the source code</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         private void VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences());
-            VerifyDiagnosticResults(diagnostics, analyzers, expected);
+            var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), true);
+            VerifyDiagnosticResults(diagnostics.Where(x => x.Id != "CS5001" /* : Program does not contain a static 'Main' method suitable for an entry point */), analyzers, expected);
         }
 
         #endregion

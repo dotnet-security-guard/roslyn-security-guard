@@ -42,7 +42,7 @@ namespace sample
             var variable1 = username;
             var variable2 = variable1;
 
-            if(variable2 != '') {
+            if(variable2 != """") {
                 new SqlCommand(variable2);
             }
         }
@@ -73,7 +73,7 @@ namespace sample
             var variable1 = username;
             var variable2 = variable1;
 
-            if(variable2 != '')
+            if(variable2 != """")
                 new SqlCommand(variable2);
 
         }

@@ -15,13 +15,17 @@ namespace RoslynSecurityGuard.Test.Tests
         {
             return new[] { new RequestValidationAnalyzer() };
         }
-        
+
+        protected override IEnumerable<MetadataReference> GetAdditionnalReferences()
+        {
+            return new[] { MetadataReference.CreateFromFile(typeof(ValidateInputAttribute).Assembly.Location) };
+        }
+
         [TestMethod]
         public void DetectAnnotationValidateInput()
         {
             var test = @"
-using System;
-using System.Diagnostics;
+using System.Web.Mvc;
 
 namespace VulnerableApp
 {

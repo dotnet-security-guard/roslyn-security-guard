@@ -35,11 +35,13 @@ namespace TestHelper
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="language">The language the source classes are in</param>
-        /// <param name="analyzer">The analyzer to be run on the sources</param>
+        /// <param name="analyzers">The analyzers to be run on the sources</param>
+        /// <param name="references">Addional refenced modules</param>
+        /// <param name="includeCompilerDiagnostics">Get compiler diagnostics too</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, IEnumerable<MetadataReference> references = null)
+        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, IEnumerable<MetadataReference> references = null, bool includeCompilerDiagnostics = false)
         {
-            return GetSortedDiagnosticsFromDocuments(analyzers, GetDocuments(sources, language, references));
+            return GetSortedDiagnosticsFromDocuments(analyzers, GetDocuments(sources, language, references), includeCompilerDiagnostics);
         }
 
         /// <summary>
@@ -48,8 +50,9 @@ namespace TestHelper
         /// </summary>
         /// <param name="analyzer">The analyzer to run on the documents</param>
         /// <param name="documents">The Documents that the analyzer will be run on</param>
+        /// <param name="includeCompilerDiagnostics">Get compiler diagnostics too</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(List<DiagnosticAnalyzer> analyzers, Document[] documents)
+        protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(List<DiagnosticAnalyzer> analyzers, Document[] documents, bool includeCompilerDiagnostics = false)
         {
             var projects = new HashSet<Project>();
             foreach (var document in documents)
@@ -61,7 +64,8 @@ namespace TestHelper
             foreach (var project in projects)
             {
                 var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create(analyzers.ToArray()));
-                var diags = compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
+                var diags = includeCompilerDiagnostics ? compilationWithAnalyzers.GetAllDiagnosticsAsync().Result : compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
+
                 foreach (var diag in diags)
                 {
                     if (diag.Location == Location.None || diag.Location.IsInMetadata)
@@ -84,7 +88,6 @@ namespace TestHelper
             }
 
             var results = SortDiagnostics(diagnostics);
-            diagnostics.Clear();
             return results;
         }
 

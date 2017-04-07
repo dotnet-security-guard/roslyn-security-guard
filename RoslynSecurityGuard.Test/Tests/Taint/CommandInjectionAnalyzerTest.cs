@@ -24,7 +24,6 @@ namespace RoslynSecurityGuard.Tests
         public void CommandInjectionFalsePositive()
         {
             var test = @"
-using System;
 using System.Diagnostics;
 
 namespace VulnerableApp
@@ -33,7 +32,7 @@ namespace VulnerableApp
     {
         static void TestCommandInject(string input)
         {
-                Process.Start(""dir"");
+            Process.Start(""dir"");
         }
     }
 }
@@ -47,7 +46,6 @@ namespace VulnerableApp
         public void CommandInjectionFalsePositive_Filename()
         {
             var test = @"
-using System;
 using System.Diagnostics;
 
 namespace VulnerableApp
@@ -76,7 +74,6 @@ namespace VulnerableApp
         public void CommandInjectionVulnerable1()
         {
             var test = @"
-using System;
 using System.Diagnostics;
 
 namespace VulnerableApp
@@ -105,7 +102,6 @@ namespace VulnerableApp
         public void CommandInjectionVulnerable2()
         {
             var test = @"
-using System;
 using System.Diagnostics;
 
 namespace VulnerableApp

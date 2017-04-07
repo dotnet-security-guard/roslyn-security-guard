@@ -25,8 +25,6 @@ namespace RoslynSecurityGuard.Test.Tests
         public void CsrfDetectMissingToken()
         {
             var test = @"
-                using System;
-                using System.Diagnostics;
                 using System.Web.Mvc;
 
                 namespace VulnerableApp
@@ -56,8 +54,6 @@ namespace RoslynSecurityGuard.Test.Tests
         public void CsrfValidateAntiForgeryTokenPresent()
         {
             var test = @"
-                using System;
-                using System.Diagnostics;
                 using System.Web.Mvc;
 
                 namespace VulnerableApp
@@ -81,8 +77,6 @@ namespace RoslynSecurityGuard.Test.Tests
         public void CsrfValidateAntiForgeryTokenPresentWithInlinedAttributes()
         {
             var test = @"
-                using System;
-                using System.Diagnostics;
                 using System.Web.Mvc;
 
                 namespace VulnerableApp

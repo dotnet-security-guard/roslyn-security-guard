@@ -164,7 +164,9 @@ namespace sample
         public static void Run(string input)
         {
             {
+#pragma warning disable 219
                 string username = ""ignore_me"";
+#pragma warning restore 219
             }
             {
                 string username = input;
