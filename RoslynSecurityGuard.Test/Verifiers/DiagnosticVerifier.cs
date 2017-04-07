@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace TestHelper
 {
@@ -37,11 +38,11 @@ namespace TestHelper
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
         /// <param name="verifyIfCompiles">Verify if the source compiles</param>
-        protected void VerifyCSharpDiagnostic(string source, DiagnosticResult[] expected = null, bool verifyIfCompiles = true)
+        protected async Task VerifyCSharpDiagnostic(string source, DiagnosticResult[] expected = null, bool verifyIfCompiles = true)
         {
             var a = GetCSharpDiagnosticAnalyzers().ToList();
             a.Add(new DebugAnalyzer());
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, a, expected ?? new DiagnosticResult[0], verifyIfCompiles);
+            await VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, a, expected ?? new DiagnosticResult[0], verifyIfCompiles);
         }
 
         /// <summary>
@@ -51,9 +52,9 @@ namespace TestHelper
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
         /// <param name="verifyIfCompiles">Verify if the source compiles</param>
-        protected void VerifyCSharpDiagnostic(string source, DiagnosticResult expected, bool verifyIfCompiles = true)
+        protected async Task VerifyCSharpDiagnostic(string source, DiagnosticResult expected, bool verifyIfCompiles = true)
         {
-            VerifyCSharpDiagnostic(source, new [] { expected }, verifyIfCompiles);
+            await VerifyCSharpDiagnostic(source, new [] { expected }, verifyIfCompiles);
         }
 
         [TestInitialize]
@@ -71,9 +72,9 @@ namespace TestHelper
         /// <param name="analyzers">The analyzers to be run on the source code</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         /// <param name="includeCompilerDiagnostics">Verify built-in compile diagnostics</param>
-        private void VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, DiagnosticResult[] expected, bool includeCompilerDiagnostics = true)
+        private async Task VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, DiagnosticResult[] expected, bool includeCompilerDiagnostics = true)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), includeCompilerDiagnostics);
+            var diagnostics = await GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), includeCompilerDiagnostics);
             VerifyDiagnosticResults(diagnostics, analyzers, expected);
         }
 

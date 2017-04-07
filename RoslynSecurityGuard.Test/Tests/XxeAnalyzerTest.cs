@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -23,7 +24,7 @@ namespace RoslynSecurityGuard.Tests
         }
 
         [TestMethod]
-        public void XxeFalsePositive1()
+        public async Task XxeFalsePositive1()
         {
             var code = @"
 using System.Xml;
@@ -38,11 +39,11 @@ class Xxe
     }
 }";
 
-            VerifyCSharpDiagnostic(code);
+            await VerifyCSharpDiagnostic(code);
         }
 
         [TestMethod]
-        public void XxeFalsePositive2()
+        public async Task XxeFalsePositive2()
         {
             var code = @"
 using System.Xml;
@@ -60,12 +61,12 @@ class Xxe
     }
 }";
 
-            VerifyCSharpDiagnostic(code);
+            await VerifyCSharpDiagnostic(code);
         }
 
 
         [TestMethod]
-        public void XxeFalsePositive3()
+        public async Task XxeFalsePositive3()
         {
             var code = @"
 using System.Xml;
@@ -81,11 +82,11 @@ class Xxe
     }
 }";
 
-            VerifyCSharpDiagnostic(code);
+            await VerifyCSharpDiagnostic(code);
         }
 
         [TestMethod]
-        public void XxeFalsePositive4()
+        public async Task XxeFalsePositive4()
         {
             var code = @"
 using System.Xml;
@@ -101,11 +102,11 @@ class Xxe
     }
 }";
 
-            VerifyCSharpDiagnostic(code);
+            await VerifyCSharpDiagnostic(code);
         }
 
         [TestMethod]
-        public void XxeVulnerable1()
+        public async Task XxeVulnerable1()
         {
             var code = @"
 using System.Xml;
@@ -126,11 +127,11 @@ class Xxe
             var expected = new[] {
                 new DiagnosticResult {Id = "SG0007",Severity = DiagnosticSeverity.Warning}};
 
-            VerifyCSharpDiagnostic(code, expected);
+            await VerifyCSharpDiagnostic(code, expected);
         }
 
         [TestMethod]
-        public void XxeVulnerable2()
+        public async Task XxeVulnerable2()
         {
             var code = @"
 using System.Xml;
@@ -148,7 +149,7 @@ class Xxe
             var expected = new[] {
                 new DiagnosticResult {Id = "SG0007",Severity = DiagnosticSeverity.Warning}};
 
-            VerifyCSharpDiagnostic(code, expected);
+            await VerifyCSharpDiagnostic(code, expected);
         }
     }
 

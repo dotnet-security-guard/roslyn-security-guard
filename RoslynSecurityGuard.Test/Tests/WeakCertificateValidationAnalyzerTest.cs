@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynSecurityGuard.Analyzers;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TestHelper;
 
 namespace RoslynSecurityGuard.Tests
@@ -18,7 +19,7 @@ namespace RoslynSecurityGuard.Tests
         }
 
         [TestMethod]
-        public void WeakCertFalsePositive()
+        public async Task WeakCertFalsePositive()
         {
             var code = @"
 using System.Net;
@@ -33,11 +34,11 @@ class OkCert {
     }
 }
 ";
-            VerifyCSharpDiagnostic(code);
+            await VerifyCSharpDiagnostic(code);
         }
 
         [TestMethod]
-        public void WeakCertVulnerable1()
+        public async Task WeakCertVulnerable1()
         {
             var code = @"
 using System.Net;
@@ -60,11 +61,11 @@ class weakCert {
                 Severity = DiagnosticSeverity.Warning,
             }.WithLocation(7,-1);
 
-            VerifyCSharpDiagnostic(code, expected);
+            await VerifyCSharpDiagnostic(code, expected);
         }
 
         [TestMethod]
-        public void WeakCertVulnerable2()
+        public async Task WeakCertVulnerable2()
         {
             var code = @"
 using System.Net;
@@ -88,7 +89,7 @@ class weakCert {
                 Severity = DiagnosticSeverity.Warning,
             }.WithLocation(7, -1);
 
-            VerifyCSharpDiagnostic(code, expected);
+            await VerifyCSharpDiagnostic(code, expected);
         }
     }
 }

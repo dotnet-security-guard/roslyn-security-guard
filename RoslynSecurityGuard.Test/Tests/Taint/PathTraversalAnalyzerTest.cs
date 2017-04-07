@@ -25,7 +25,7 @@ namespace RoslynSecurityGuard.Test.Tests.Taint
 
 
         [TestMethod]
-        public void PathTraversalFound1()
+        public async Task PathTraversalFound1()
         {
             var test = @"
 using System.IO;
@@ -43,11 +43,11 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void PathTraversalFound2()
+        public async Task PathTraversalFound2()
         {
             var test = @"
 using System.IO;
@@ -65,12 +65,12 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
 
         [TestMethod]
-        public void PathTraversalFound3()
+        public async Task PathTraversalFound3()
         {
             var test = @"
 using System.IO;
@@ -88,7 +88,7 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
@@ -172,7 +172,7 @@ class PathTraversal
     }
 }
 ";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
     }
 }

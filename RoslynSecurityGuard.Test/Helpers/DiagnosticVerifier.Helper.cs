@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TestHelper
 {
@@ -42,9 +43,9 @@ namespace TestHelper
         /// <param name="references">Addional refenced modules</param>
         /// <param name="includeCompilerDiagnostics">Get compiler diagnostics too</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, IEnumerable<MetadataReference> references = null, bool includeCompilerDiagnostics = false)
+        private static async Task<Diagnostic[]> GetSortedDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, IEnumerable<MetadataReference> references = null, bool includeCompilerDiagnostics = false)
         {
-            return GetSortedDiagnosticsFromDocuments(analyzers, GetDocuments(sources, language, references), includeCompilerDiagnostics);
+            return await GetSortedDiagnosticsFromDocuments(analyzers, GetDocuments(sources, language, references), includeCompilerDiagnostics);
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace TestHelper
         /// <param name="documents">The Documents that the analyzer will be run on</param>
         /// <param name="includeCompilerDiagnostics">Get compiler diagnostics too</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(List<DiagnosticAnalyzer> analyzers, Document[] documents, bool includeCompilerDiagnostics = false)
+        protected static async Task<Diagnostic[]> GetSortedDiagnosticsFromDocuments(List<DiagnosticAnalyzer> analyzers, Document[] documents, bool includeCompilerDiagnostics = false)
         {
             var projects = new HashSet<Project>();
             foreach (var document in documents)
@@ -66,8 +67,9 @@ namespace TestHelper
             var diagnostics = new List<Diagnostic>();
             foreach (var project in projects)
             {
-                var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create(analyzers.ToArray()));
-                var diags = includeCompilerDiagnostics ? compilationWithAnalyzers.GetAllDiagnosticsAsync().Result : compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
+                var compilation = await project.GetCompilationAsync();
+                var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzers.ToArray()));
+                var diags = includeCompilerDiagnostics ? await compilationWithAnalyzers.GetAllDiagnosticsAsync() : await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
 
                 foreach (var diag in diags)
                 {
@@ -80,7 +82,7 @@ namespace TestHelper
                         for (int i = 0; i < documents.Length; i++)
                         {
                             var document = documents[i];
-                            var tree = document.GetSyntaxTreeAsync().Result;
+                            var tree = await document.GetSyntaxTreeAsync();
                             if (tree == diag.Location.SourceTree)
                             {
                                 diagnostics.Add(diag);

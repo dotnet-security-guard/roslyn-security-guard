@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
 using RoslynSecurityGuard.Analyzers.Taint;
 
@@ -23,7 +24,7 @@ namespace RoslynSecurityGuard.Tests
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void XPathInjectionFalsePositive()
+        public async Task XPathInjectionFalsePositive()
         {
             var test = @"
 using System.Xml;
@@ -39,11 +40,11 @@ class XPathInjectionTP
         doc.SelectSingleNode(""/Config/Devices/Device[type='2600']"");
     }
 }";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
         
         [TestMethod]
-        public void XPathInjectionVulnerable1()
+        public async Task XPathInjectionVulnerable1()
         {
             var test = @"
 using System.Xml;
@@ -64,12 +65,12 @@ class XPathInjectionTP
                 new DiagnosticResult {Id = "SG0003",Severity = DiagnosticSeverity.Warning},
                 new DiagnosticResult { Id = "SG0003", Severity = DiagnosticSeverity.Warning} };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         //Make sure MemberAccessExpressionSyntax are covered
         [TestMethod]
-        public void XPathInjectionVulnerable2()
+        public async Task XPathInjectionVulnerable2()
         {
             var test = @"
 using System.Xml;
@@ -90,7 +91,7 @@ class XPathInjectionTP
                 new DiagnosticResult {Id = "SG0003",Severity = DiagnosticSeverity.Warning},
                 new DiagnosticResult { Id = "SG0003", Severity = DiagnosticSeverity.Warning} };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using RoslynSecurityGuard.Analyzers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TestHelper;
 using Microsoft.CodeAnalysis;
 
@@ -16,7 +17,7 @@ namespace RoslynSecurityGuard.Test.Tests
         }
 
         [TestMethod]
-        public void WeakCipherFalsePositive()
+        public async Task WeakCipherFalsePositive()
         {
             var test = @"
 using System.IO;
@@ -52,11 +53,11 @@ class WeakCipherAlgorithm
                 fStream.Close();
         }
     }";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void WeakCipherVulnerableDES()
+        public async Task WeakCipherVulnerableDES()
         {
             var test = @"
 using System.IO;
@@ -101,11 +102,11 @@ class WeakCipherAlgorithm
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void WeakCipherVulnerableRC2()
+        public async Task WeakCipherVulnerableRC2()
         {
             var test = @"
 using System.IO;
@@ -150,11 +151,11 @@ class WeakCipherAlgorithm
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void WeakCipherVulnerableDES2()
+        public async Task WeakCipherVulnerableDES2()
         {
             var test = @"
 using System.IO;
@@ -198,11 +199,11 @@ class WeakCipherAlgorithm
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void WeakCipherVulnerableRC2_2()
+        public async Task WeakCipherVulnerableRC2_2()
         {
             var test = @"
 using System.IO;
@@ -246,7 +247,7 @@ class WeakCipherAlgorithm
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
     }
 }

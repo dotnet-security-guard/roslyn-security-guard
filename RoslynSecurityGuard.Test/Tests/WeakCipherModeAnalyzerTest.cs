@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynSecurityGuard.Analyzers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TestHelper;
 
 namespace RoslynSecurityGuard.Test.Tests
@@ -17,7 +18,7 @@ namespace RoslynSecurityGuard.Test.Tests
         }
 
         [TestMethod]
-        public void WeakCipherModeECB()
+        public async Task WeakCipherModeECB()
         {
             var test = @"
 using System;
@@ -52,11 +53,11 @@ class WeakCipherMode
 
             };
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void WeakCipherModeOFB()
+        public async Task WeakCipherModeOFB()
         {
             var test = @"
 using System;
@@ -91,11 +92,11 @@ class WeakCipherMode
 
             };
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void WeakCipherModeCBC()
+        public async Task WeakCipherModeCBC()
         {
             var test = @"
 using System;
@@ -152,7 +153,7 @@ class WeakCipherMode
 
             };
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
 

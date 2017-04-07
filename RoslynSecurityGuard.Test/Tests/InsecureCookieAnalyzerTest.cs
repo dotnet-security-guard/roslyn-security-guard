@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 
 using TestHelper;
@@ -26,7 +27,7 @@ namespace RoslynSecurityGuard.Test.Tests
         }
 
         [TestMethod]
-        public void CookieWithoutFlags()
+        public async Task CookieWithoutFlags()
         {
 
             var test = @"
@@ -54,11 +55,11 @@ namespace VulnerableApp
                 Id = "SG0009",
                 Severity = DiagnosticSeverity.Warning
             };
-            VerifyCSharpDiagnostic(test, new DiagnosticResult[] { expected08, expected09 });
+            await VerifyCSharpDiagnostic(test, new DiagnosticResult[] { expected08, expected09 });
         }
 
         [TestMethod]
-        public void CookieWithFlags()
+        public async Task CookieWithFlags()
         {
             var test = @"
 using System.Web;
@@ -76,7 +77,7 @@ namespace VulnerableApp
     }
 }
 ";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
 /*

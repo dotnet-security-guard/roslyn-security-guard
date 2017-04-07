@@ -5,6 +5,7 @@ using RoslynSecurityGuard.Analyzers;
 using RoslynSecurityGuard.Analyzers.Taint;
 using System.Collections.Generic;
 using System.Data.Linq;
+using System.Threading.Tasks;
 using TestHelper;
 
 namespace RoslynSecurityGuard.Tests
@@ -25,7 +26,7 @@ namespace RoslynSecurityGuard.Tests
         }
 
         [TestMethod]
-        public void LinqInjectionFalsePositiveWithGeneric()
+        public async Task LinqInjectionFalsePositiveWithGeneric()
         {
             var test = @"
 using System.Data.Linq;
@@ -49,11 +50,11 @@ namespace VulnerableApp
     }
 }
 ";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void LinqInjectionVulnerableWithGeneric()
+        public async Task LinqInjectionVulnerableWithGeneric()
         {
             var test = @"
 using System.Data.Linq;
@@ -85,11 +86,11 @@ namespace VulnerableApp
                 Severity = DiagnosticSeverity.Warning,
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void LinqInjectionFalsePositiveWithoutGeneric()
+        public async Task LinqInjectionFalsePositiveWithoutGeneric()
         {
             var test = @"
 using System;
@@ -118,12 +119,12 @@ namespace VulnerableApp
                 Severity = DiagnosticSeverity.Warning,
             };
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
 
         [TestMethod]
-        public void LinqInjectionVulnerableWithoutGeneric()
+        public async Task LinqInjectionVulnerableWithoutGeneric()
         {
             var test = @"
 using System;
@@ -151,7 +152,7 @@ namespace VulnerableApp
                 Severity = DiagnosticSeverity.Warning,
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
     }
 }
