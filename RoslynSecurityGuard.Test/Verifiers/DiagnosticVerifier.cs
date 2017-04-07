@@ -35,13 +35,25 @@ namespace TestHelper
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
-        /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
-        protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
+        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
+        /// <param name="verifyIfCompiles">Verify if the source compiles</param>
+        protected void VerifyCSharpDiagnostic(string source, DiagnosticResult[] expected = null, bool verifyIfCompiles = true)
         {
-
             var a = GetCSharpDiagnosticAnalyzers().ToList();
             a.Add(new DebugAnalyzer());
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, a, expected);
+            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, a, expected ?? new DiagnosticResult[0], verifyIfCompiles);
+        }
+
+        /// <summary>
+        /// Called to test a C# DiagnosticAnalyzer when applied on the single inputted string as a source
+        /// Note: input a DiagnosticResult for each Diagnostic expected
+        /// </summary>
+        /// <param name="source">A class in the form of a string to run the analyzer on</param>
+        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
+        /// <param name="verifyIfCompiles">Verify if the source compiles</param>
+        protected void VerifyCSharpDiagnostic(string source, DiagnosticResult expected, bool verifyIfCompiles = true)
+        {
+            VerifyCSharpDiagnostic(source, new [] { expected }, verifyIfCompiles);
         }
 
         [TestInitialize]
@@ -58,9 +70,10 @@ namespace TestHelper
         /// <param name="language">The language of the classes represented by the source strings</param>
         /// <param name="analyzers">The analyzers to be run on the source code</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        private void VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, params DiagnosticResult[] expected)
+        /// <param name="includeCompilerDiagnostics">Verify built-in compile diagnostics</param>
+        private void VerifyDiagnostics(string[] sources, string language, List<DiagnosticAnalyzer> analyzers, DiagnosticResult[] expected, bool includeCompilerDiagnostics = true)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), true);
+            var diagnostics = GetSortedDiagnostics(sources, language, analyzers, GetAdditionnalReferences(), includeCompilerDiagnostics);
             VerifyDiagnosticResults(diagnostics.Where(x => x.Id != "CS5001" /* : Program does not contain a static 'Main' method suitable for an entry point */), analyzers, expected);
         }
 
