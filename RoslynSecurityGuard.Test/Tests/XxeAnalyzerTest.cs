@@ -167,11 +167,10 @@ class Xxe
         }
 
         [TestMethod]
-        public void FalsePositive1()
+        public async Task FalsePositive1()
         {
             var test = @"
 using System.IO;
-using System;
 using System.Xml;
 
 class PathTraversal
@@ -185,7 +184,7 @@ class PathTraversal
     }
 }
 ";
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
     }
 }

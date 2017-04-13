@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynSecurityGuard.Analyzers.Taint;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 using TestHelper;
 
@@ -92,7 +93,7 @@ class PathTraversal
         }
 
         [TestMethod]
-        public void PathTraversalFound4()
+        public async Task PathTraversalFound4()
         {
             var test = @"
 using System.IO;
@@ -110,11 +111,11 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void PathTraversalFound5()
+        public async Task PathTraversalFound5()
         {
             var test = @"
 using System.IO;
@@ -132,11 +133,11 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void PathTraversalFound6()
+        public async Task PathTraversalFound6()
         {
             var test = @"
 using System.Xml;
@@ -155,11 +156,11 @@ class PathTraversal
                 Id = "SG0018",
                 Severity = DiagnosticSeverity.Warning,
             };
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void FalsePositive1()
+        public async Task FalsePositive1()
         {
             var test = @"
 using System.IO;

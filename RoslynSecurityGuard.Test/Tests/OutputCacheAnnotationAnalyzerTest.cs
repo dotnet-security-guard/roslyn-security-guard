@@ -94,14 +94,13 @@ public class HomeController : Controller
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void DetectAnnotation4()
+        public async Task DetectAnnotation4()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [Authorize]
@@ -124,14 +123,13 @@ public class HomeController : MyController
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void DetectAnnotation5()
+        public async Task DetectAnnotation5()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 public class MyController : Controller
@@ -158,14 +156,13 @@ public class HomeController : MyController
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void DetectAnnotation6()
+        public async Task DetectAnnotation6()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 public abstract class MyController : Controller
@@ -189,14 +186,13 @@ public class HomeController : MyController
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void DetectAnnotation7()
+        public async Task DetectAnnotation7()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 public class MyController : Controller
@@ -223,14 +219,13 @@ public class HomeController : MyController
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
         [TestMethod]
-        public void DetectAnnotation8()
+        public async Task DetectAnnotation8()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [OutputCache(NoStore = true, Duration = 0, VaryByParam = ""*"")]
@@ -254,7 +249,7 @@ public class HomeController : MyController
                 Severity = DiagnosticSeverity.Warning
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            await VerifyCSharpDiagnostic(test, expected);
         }
 
 // The question is if we want to go so far and detect a derived attribute since the caching logic can be altered
@@ -320,10 +315,9 @@ public class HomeController : MyController
 //        }
 
         [TestMethod]
-        public void FalsePositive1()
+        public async Task FalsePositive1()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 public class HomeController : Controller
@@ -336,14 +330,13 @@ public class HomeController : Controller
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void FalsePositive2()
+        public async Task FalsePositive2()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [OutputCache(NoStore = true, Duration = 0, VaryByParam = ""*"")]
@@ -357,14 +350,13 @@ public class HomeController : Controller
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void FalsePositive3()
+        public async Task FalsePositive3()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [OutputCache(NoStore = true, Duration = int.MaxValue, VaryByParam = ""*"")]
@@ -383,14 +375,13 @@ public class HomeController : MyController
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void FalsePositive4()
+        public async Task FalsePositive4()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [OutputCache(NoStore = true, Duration = 3600, VaryByParam = ""*"")]
@@ -409,14 +400,13 @@ public class HomeController : MyController
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void FalsePositive5()
+        public async Task FalsePositive5()
         {
             var test = @"
-using System;
 using System.Web.Mvc;
 
 [Authorize]
@@ -430,11 +420,11 @@ public class HomeController : Controller
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
 
         [TestMethod]
-        public void FalsePositive6()
+        public async Task FalsePositive6()
         {
             var test = @"
 using System;
@@ -459,7 +449,7 @@ public class HomeController : Controller
 }
 ";
 
-            VerifyCSharpDiagnostic(test);
+            await VerifyCSharpDiagnostic(test);
         }
     }
 }
