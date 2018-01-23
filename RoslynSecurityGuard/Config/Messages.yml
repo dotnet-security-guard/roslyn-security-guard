@@ -57,6 +57,11 @@ SG0003:
   title: Potential XPath injection with XmlDocument
   description: The dynamic value passed to the XPath query should be validated
 
+SG0036:
+  class: TaintAnalyzer
+  title: Potential OpenRedirect
+  description: The dynamic value passed to the redirect should be validated
+
 # Various
 
 SG0004:

@@ -398,3 +398,60 @@ StreamReader_Create_path_encoding_bool_int:
   argTypes: (System.String, System.Text.Encoding, System.Boolean, System.Int32)
   injectableArguments: 0
   locale: SG0018
+
+# Open Redirects
+
+System.Web.HttpResponse_Redirect_string:
+   namespace: System.Web
+   className: HttpResponse
+   member: method
+   name: Redirect
+   argTypes: (System.String)
+   injectableArguments: 0
+   locale: SG0036
+
+System.Web.HttpResponse_Redirect_string_bool:
+   namespace: System.Web
+   className: HttpResponse
+   member: method
+   name: Redirect
+   argTypes: (System.String, System.Boolean)
+   injectableArguments: 0
+   locale: SG0036
+
+Microsoft.AspNetCore.Http.HttpResponse_Redirect_string:
+   namespace: Microsoft.AspNetCore.Http
+   className: HttpResponse
+   member: method
+   name: Redirect
+   argTypes: (System.String)
+   injectableArguments: 0
+   locale: SG0036
+
+Microsoft.AspNetCore.Http.HttpResponse_Redirect_string_bool:
+   namespace: Microsoft.AspNetCore.Http
+   className: HttpResponse
+   member: method
+   name: Redirect
+   argTypes: (System.String, System.Boolean)
+   injectableArguments: 0
+   locale: SG0036
+
+
+Controller_Redirect_string:
+    namespace: System.Web.Mvc
+    className: Controller
+    member: method
+    name: Redirect
+    argTypes: (System.String)
+    injectableArguments: 0
+    locale: SG0036
+
+Controller_RedirectPermanent_string:
+    namespace: System.Web.Mvc
+    className: Controller
+    member: method
+    name: RedirectPermanent
+    argTypes: (System.String)
+    injectableArguments: 0
+    locale: SG0036
