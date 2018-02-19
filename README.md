@@ -1,3 +1,6 @@
+> :warning: This project is no longer active. The project [Security Code Scan](https://github.com/security-code-scan/security-code-scan) is a more recent version which include all the analyzers from this project. It has many important bug fixes.
+
+
 # ![Roslyn Security Guard](https://dotnet-security-guard.github.io/images/logo-small.png) [![Build status](https://ci.appveyor.com/api/projects/status/pkob4ym74k3j2j6i?svg=true)](https://ci.appveyor.com/project/h3xstream/roslyn-security-guard)
 
 
